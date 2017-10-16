@@ -8,3 +8,7 @@ dependencies
 ============
 python3 -m pip install pymongo
 
+Usage
+=====
+python3 importer.py <filename.tar.gz> <target-collection-name>
+
