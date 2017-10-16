@@ -32,7 +32,6 @@ for tar_info in tar:
 		if skip_count > resume:
 			if (tar_info.size < 16777216):
 				f = tar.extractfile(tar_info)
-				#add file name? would catch locked/depreciated files
 				batch.append(json.loads(f.read()))
 			else:
 				print ("{} too large {} bytes".format(tar_info.name,tar_info.size))
