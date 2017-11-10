@@ -5,10 +5,16 @@ import json
 import time
 import sys
 
+parser = argparse.ArgumentParser(description='ORCID Mongo importer')
+parser.add_argument('--file', dest="file", help="the .tar.gz JSON datadump file")
+parser.add_argument('--collection', dest="collection", help="the mongo collection to import into")
+parser.add_argument('--resume', dest="resume", type=int, default=0)
+args = parser.parse_args()
+
 #create collection from param
 client = MongoClient()
 db = client.orcid
-collection = db[sys.argv[2]]
+collection = db[args.collection]
 
 batch = []
 count = 0;
@@ -18,12 +24,12 @@ resume = 0
 skip_count = 0
 count = 0
 #resume?
-if sys.argv[3]:
-	resume = int(sys.argv[3])
+if args.resume:
+	resume = int(args.resume)
 	count += resume
 
 #pass tar file in as param
-tar = tarfile.open(sys.argv[1], 'r|gz') 
+tar = tarfile.open(args.file, 'r|gz') 
 
 #batch up the json and insert into mongo
 for tar_info in tar:
